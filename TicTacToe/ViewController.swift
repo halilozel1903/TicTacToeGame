@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // button tanımlamaları
     @IBOutlet weak var but1: UIButton!
     @IBOutlet weak var but2: UIButton!
     @IBOutlet weak var but3: UIButton!
@@ -152,24 +153,24 @@ class ViewController: UIViewController {
         
     }
     
-    
+    // oyunu başlatma metodu
     func autoPlay(){
     
-    var emptyCells = [Int]()
+    var emptyCells = [Int]() // hücreleri çağırmak için bir boş array tanımlandı.
     
-    for index in 1...9{
+    for index in 1...9{ // index değerleri kadar dön
     
-        if !(player1.contains(index)||player2.contains(index)){
-            emptyCells.append(index)
+        if !(player1.contains(index)||player2.contains(index)){ // değerler içermiyorsa
+            emptyCells.append(index) // ekle
         }
     
     }
         
-        let randIndex = arc4random_uniform(UInt32(emptyCells.count))
-        let cellID = emptyCells[Int(randIndex)]
-        var buSelect : UIButton?
+        let randIndex = arc4random_uniform(UInt32(emptyCells.count)) // rastgele bir index oluştur
+        let cellID = emptyCells[Int(randIndex)] // index değerini ata
+        var buSelect : UIButton? // button değişkeni
         
-        switch cellID {
+        switch cellID { // cellID değerlerini kontrol etme
         case 1:
             buSelect = but1
         case 2:
@@ -192,7 +193,7 @@ class ViewController: UIViewController {
             buSelect = but1
         }
         
-        playGame(butSelect: buSelect!)
+        playGame(butSelect: buSelect!) // oyunu başlatma metodu
     
     }
     
