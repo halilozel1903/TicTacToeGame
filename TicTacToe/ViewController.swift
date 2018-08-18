@@ -10,6 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var but1: UIButton!
+    @IBOutlet weak var but2: UIButton!
+    @IBOutlet weak var but3: UIButton!
+    @IBOutlet weak var but4: UIButton!
+    @IBOutlet weak var but5: UIButton!
+    @IBOutlet weak var but6: UIButton!
+    @IBOutlet weak var but7: UIButton!
+    @IBOutlet weak var but8: UIButton!
+    @IBOutlet weak var but9: UIButton!
+    
+    
+    
     var activePlayer = 1 // aktif kullanıcı tanımlandı.
     var player1 = [Int]() // 1.kullanıcının oynadığı alanlar çizildi.
     var player2 = [Int]() // 2.kullanıcının oynadığı alanlar çizildi.
@@ -37,6 +49,7 @@ class ViewController: UIViewController {
             player1.append(butSelect.tag)
            // print(player1)
             activePlayer = 2
+            autoPlay()
         }else{ // ikinci oyuncunun oynadıktan sonra neler olacak onlar belirtiliyor.
             butSelect.setTitle("O", for: UIControlState.normal)
             butSelect.backgroundColor = UIColor.blue
@@ -137,6 +150,50 @@ class ViewController: UIViewController {
         }
         
         
+    }
+    
+    
+    func autoPlay(){
+    
+    var emptyCells = [Int]()
+    
+    for index in 1...9{
+    
+        if !(player1.contains(index)||player2.contains(index)){
+            emptyCells.append(index)
+        }
+    
+    }
+        
+        let randIndex = arc4random_uniform(UInt32(emptyCells.count))
+        let cellID = emptyCells[Int(randIndex)]
+        var buSelect : UIButton?
+        
+        switch cellID {
+        case 1:
+            buSelect = but1
+        case 2:
+            buSelect = but2
+        case 3:
+            buSelect = but3
+        case 4:
+            buSelect = but4
+        case 5:
+            buSelect = but5
+        case 6:
+            buSelect = but6
+        case 7:
+            buSelect = but7
+        case 8:
+            buSelect = but8
+        case 9:
+            buSelect = but9
+        default:
+            buSelect = but1
+        }
+        
+        playGame(butSelect: buSelect!)
+    
     }
     
     

@@ -183,6 +183,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="but1" destination="F7h-sr-WOx" id="Y6b-Im-COG"/>
+                        <outlet property="but2" destination="kXj-KB-0eO" id="eld-lf-y1h"/>
+                        <outlet property="but3" destination="cYa-zS-A8J" id="GGB-C3-1qA"/>
+                        <outlet property="but4" destination="WuW-a8-7ff" id="D3m-UH-aIj"/>
+                        <outlet property="but5" destination="VfN-np-sqv" id="HBb-rb-dGb"/>
+                        <outlet property="but6" destination="L4q-GT-D4e" id="HkL-FB-61C"/>
+                        <outlet property="but7" destination="Wqr-cV-iEn" id="dma-a8-CrK"/>
+                        <outlet property="but8" destination="lPC-zL-bX4" id="FuH-rU-KoS"/>
+                        <outlet property="but9" destination="96o-QS-0pL" id="Fkt-SS-VfX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
