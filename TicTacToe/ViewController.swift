@@ -15,11 +15,37 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func buttonSelected(_ sender: Any) {
+        
+        let selectedButton = sender as! UIButton
+       // print(selectedButton.tag)
+        playGame(butSelect: selectedButton)
+        
     }
-
+    
+    var activePlayer = 1
+    var player1 = [Int]()
+    var player2 = [Int]()
+    
+    func playGame(butSelect:UIButton){
+        
+        if activePlayer == 1{
+            butSelect.setTitle("X", for: UIControlState.normal)
+            butSelect.backgroundColor = UIColor.green
+            player1.append(butSelect.tag)
+            print(player1)
+            activePlayer = 2
+        }else{
+            butSelect.setTitle("O", for: UIControlState.normal)
+            butSelect.backgroundColor = UIColor.blue
+            player2.append(butSelect.tag)
+            print(player2)
+            activePlayer = 1
+        }
+        butSelect.isEnabled = false
+        
+    }
+    
 
 }
 
