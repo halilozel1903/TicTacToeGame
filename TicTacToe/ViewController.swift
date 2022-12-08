@@ -22,7 +22,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var but9: UIButton!
     
     
-    
     var activePlayer = 1 // aktif kullanıcı tanımlandı.
     var player1 = [Int]() // 1.kullanıcının oynadığı alanlar çizildi.
     var player2 = [Int]() // 2.kullanıcının oynadığı alanlar çizildi.
@@ -34,7 +33,6 @@ class ViewController: UIViewController {
     }
 
     @IBAction func buttonSelected(_ sender: Any) {
-        
         let selectedButton = sender as! UIButton
        // print(selectedButton.tag)
         playGame(butSelect: selectedButton)
@@ -192,16 +190,6 @@ class ViewController: UIViewController {
         default:
             buSelect = but1
         }
-        
         playGame(butSelect: buSelect!) // oyunu başlatma metodu
-    
     }
-    
-    
-    
-    
-    
-    
-
 }
-
