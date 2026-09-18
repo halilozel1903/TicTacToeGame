@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    // button tanımlamaları
     @IBOutlet weak var but1: UIButton!
     @IBOutlet weak var but2: UIButton!
     @IBOutlet weak var but3: UIButton!
@@ -20,176 +19,178 @@ class ViewController: UIViewController {
     @IBOutlet weak var but7: UIButton!
     @IBOutlet weak var but8: UIButton!
     @IBOutlet weak var but9: UIButton!
-    
-    
-    var activePlayer = 1 // aktif kullanıcı tanımlandı.
-    var player1 = [Int]() // 1.kullanıcının oynadığı alanlar çizildi.
-    var player2 = [Int]() // 2.kullanıcının oynadığı alanlar çizildi.
-    
-    
+
+    var activePlayer = 1
+    var player1 = [Int]()
+    var player2 = [Int]()
+    var gameOver = false
+    var playerWins = 0
+    var computerWins = 0
+    var draws = 0
+
+    private let scoreLabel = UILabel()
+    private let restartButton = UIButton(type: .system)
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        setupScoreboard()
+        refreshScoreLabel()
     }
 
     @IBAction func buttonSelected(_ sender: Any) {
         let selectedButton = sender as! UIButton
-       // print(selectedButton.tag)
         playGame(butSelect: selectedButton)
-        
     }
-    
 
-    func playGame(butSelect:UIButton){
-        
-        if activePlayer == 1{ // birinci oyuncu ile ilgili işlemler tanımlandı.
+    func playGame(butSelect: UIButton) {
+        if gameOver || !butSelect.isEnabled {
+            return
+        }
+
+        if activePlayer == 1 {
             butSelect.setTitle("X", for: UIControlState.normal)
             butSelect.backgroundColor = UIColor.green
             player1.append(butSelect.tag)
-           // print(player1)
+            butSelect.isEnabled = false
             activePlayer = 2
+
+            if finishIfNeeded() {
+                return
+            }
+
             autoPlay()
-        }else{ // ikinci oyuncunun oynadıktan sonra neler olacak onlar belirtiliyor.
+        } else {
             butSelect.setTitle("O", for: UIControlState.normal)
             butSelect.backgroundColor = UIColor.blue
             player2.append(butSelect.tag)
-           // print(player2)
+            butSelect.isEnabled = false
             activePlayer = 1
+            finishIfNeeded()
         }
-        butSelect.isEnabled = false // tıklanan bir butona bir daha tıklanmaması için bu değeri false yaptık.
-        
-        findWinner() // kazananı bulma metodunu çağırdık.
     }
-    
-    // kazanan oyuncuyu bulma işlemleri gerçekleşiyor.
-    func findWinner(){
-        var winner = -1
-        
-        // row 1
-        
-        if(player1.contains(1) && player1.contains(2) && player1.contains(3)){
-            winner = 1
+
+    @discardableResult
+    func finishIfNeeded() -> Bool {
+        switch TicTacToeEngine.outcome(playerX: player1, playerO: player2) {
+        case .win(.x):
+            playerWins += 1
+            endGame(title: "Winner", message: "Player 1 is winner")
+            return true
+        case .win(.o):
+            computerWins += 1
+            endGame(title: "Winner", message: "Player 2 is winner")
+            return true
+        case .draw:
+            draws += 1
+            endGame(title: "Draw", message: "The board is full. It's a draw.")
+            return true
+        case .ongoing:
+            return false
         }
-        
-        if(player2.contains(1) && player2.contains(2) && player2.contains(3)){
-            winner = 2
+    }
+
+    func endGame(title: String, message: String) {
+        gameOver = true
+        setBoardEnabled(false)
+        refreshScoreLabel()
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Play again", style: UIAlertActionStyle.default, handler: { _ in
+            self.resetBoard()
+        }))
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+        present(alert, animated: true, completion: nil)
+    }
+
+    func autoPlay() {
+        guard let cellID = TicTacToeEngine.computerMove(playerX: player1, playerO: player2) else {
+            finishIfNeeded()
+            return
         }
-        
-        
-        // row 2
-        
-        if(player1.contains(4) && player1.contains(5) && player1.contains(6)){
-            winner = 1
+
+        if let button = button(for: cellID) {
+            playGame(butSelect: button)
         }
-        
-        if(player2.contains(4) && player2.contains(5) && player2.contains(6)){
-            winner = 2
+    }
+
+    @objc func resetBoard() {
+        player1.removeAll()
+        player2.removeAll()
+        activePlayer = 1
+        gameOver = false
+
+        for button in boardButtons() {
+            button.setTitle("", for: UIControlState.normal)
+            button.backgroundColor = UIColor.white
+            button.isEnabled = true
         }
-        
-        
-        // row 3
-        
-        if(player1.contains(7) && player1.contains(8) && player1.contains(9)){
-            winner = 1
-        }
-        
-        if(player2.contains(7) && player2.contains(8) && player2.contains(9)){
-            winner = 2
-        }
-        
-        
-        // col 1
-        
-        if(player1.contains(1) && player1.contains(4) && player1.contains(7)){
-            winner = 1
-        }
-        
-        if(player2.contains(1) && player2.contains(4) && player2.contains(7)){
-            winner = 2
-        }
-        
-        // col 2
-        
-        if(player1.contains(2) && player1.contains(5) && player1.contains(8)){
-            winner = 1
-        }
-        
-        if(player2.contains(2) && player2.contains(5) && player2.contains(8)){
-            winner = 2
-        }
-        
-        // col 3
-        
-        if(player1.contains(3) && player1.contains(6) && player1.contains(9)){
-            winner = 1
-        }
-        
-        if(player2.contains(3) && player2.contains(6) && player2.contains(9)){
-            winner = 2
-        }
-        
-        if winner != -1{ // winner değeri -1 değilse
-            
-            var msg = ""
-            
-            // kazanan 1. oyuncu ise
-            if winner == 1{
-                msg = "Player 1 is winner" // mesaj
-            }else{ // kazanan 2. oyunuc ise
-                msg = "Player 2 is winner" // mesaj
+    }
+
+    private func setBoardEnabled(_ enabled: Bool) {
+        for button in boardButtons() {
+            if player1.contains(button.tag) || player2.contains(button.tag) {
+                button.isEnabled = false
+            } else {
+                button.isEnabled = enabled
             }
-            
-            // print(msg)
-            
-            // alert gösterimi
-            let alert = UIAlertController(title: "Winner", message: msg, preferredStyle: UIAlertControllerStyle.alert)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
-            
         }
-        
-        
     }
-    
-    // oyunu başlatma metodu
-    func autoPlay(){
-    
-    var emptyCells = [Int]() // hücreleri çağırmak için bir boş array tanımlandı.
-    
-    for index in 1...9{ // index değerleri kadar dön
-    
-        if !(player1.contains(index)||player2.contains(index)){ // değerler içermiyorsa
-            emptyCells.append(index) // ekle
-        }
-    
+
+    private func boardButtons() -> [UIButton] {
+        return [but1, but2, but3, but4, but5, but6, but7, but8, but9]
     }
-        
-        let randIndex = arc4random_uniform(UInt32(emptyCells.count)) // rastgele bir index oluştur
-        let cellID = emptyCells[Int(randIndex)] // index değerini ata
-        var buSelect : UIButton? // button değişkeni
-        
-        switch cellID { // cellID değerlerini kontrol etme
+
+    private func button(for cellID: Int) -> UIButton? {
+        switch cellID {
         case 1:
-            buSelect = but1
+            return but1
         case 2:
-            buSelect = but2
+            return but2
         case 3:
-            buSelect = but3
+            return but3
         case 4:
-            buSelect = but4
+            return but4
         case 5:
-            buSelect = but5
+            return but5
         case 6:
-            buSelect = but6
+            return but6
         case 7:
-            buSelect = but7
+            return but7
         case 8:
-            buSelect = but8
+            return but8
         case 9:
-            buSelect = but9
+            return but9
         default:
-            buSelect = but1
+            return nil
         }
-        playGame(butSelect: buSelect!) // oyunu başlatma metodu
+    }
+
+    private func setupScoreboard() {
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.textAlignment = .center
+        scoreLabel.numberOfLines = 2
+        scoreLabel.font = UIFont.boldSystemFont(ofSize: 16)
+
+        restartButton.translatesAutoresizingMaskIntoConstraints = false
+        restartButton.setTitle("Restart", for: .normal)
+        restartButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        restartButton.addTarget(self, action: #selector(resetBoard), for: .touchUpInside)
+
+        view.addSubview(scoreLabel)
+        view.addSubview(restartButton)
+
+        NSLayoutConstraint.activate([
+            scoreLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
+            scoreLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            scoreLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+
+            restartButton.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 4),
+            restartButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            restartButton.bottomAnchor.constraint(lessThanOrEqualTo: but1.topAnchor, constant: -8)
+        ])
+    }
+
+    private func refreshScoreLabel() {
+        scoreLabel.text = "You \(playerWins)  •  Draw \(draws)  •  CPU \(computerWins)"
     }
 }
