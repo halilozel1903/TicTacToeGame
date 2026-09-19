@@ -1,24 +1,73 @@
-# Tic Tac Toe Game ❌ 🅾️ ❌
+# Tic Tac Toe
 
-![Screenshot](https://m.media-amazon.com/images/I/612MW7s6D8L.jpg)
+<p align="center">
+  <img src="TicTacToe/screen-1.png" width="220" alt="Empty tic-tac-toe board at the start of a match" />
+</p>
 
-Tic-tac-toe, noughts and crosses, or Xs and Os is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.
+<p align="center">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-iOS-000000?logo=apple&logoColor=white" />
+  <img alt="Swift" src="https://img.shields.io/badge/Swift-4.0-F05138?logo=swift&logoColor=white" />
+  <img alt="UIKit" src="https://img.shields.io/badge/UI-UIKit-2396F3" />
+  <img alt="iOS" src="https://img.shields.io/badge/iOS-11.4%2B-lightgrey" />
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-blue" />
+</p>
+
+<p align="center">
+  <img alt="ios" src="https://img.shields.io/badge/topic-ios-111111" />
+  <img alt="swift" src="https://img.shields.io/badge/topic-swift-F05138" />
+  <img alt="ios-game" src="https://img.shields.io/badge/topic-ios--game-6E40C9" />
+  <img alt="tic-tac-toe" src="https://img.shields.io/badge/topic-tic--tac--toe-2EA44F" />
+  <img alt="uikit" src="https://img.shields.io/badge/topic-uikit-2396F3" />
+</p>
+
+iOS UIKit tic-tac-toe match: you play X against a blocking computer opponent on a 3×3 board.
+
+**About:** `iOS Tic Tac Toe in Swift and UIKit. Play X against a blocking CPU with draws, a scoreboard, and restart.`
+
+Suggested GitHub topics: `ios`, `swift`, `uikit`, `ios-game`, `tic-tac-toe`, `mobile-game`
+
+## Highlights
+
+- Player is X, computer is O
+- Wins on rows, columns, and both diagonals
+- Draw when the board is full
+- Computer finishes its own line, then blocks, then prefers center and corners
+- Scoreboard for wins, draws, and losses
+- **Restart** / **Play again** clears the board and keeps the score
 
 ## How to play
 
-You play as X against a computer opponent as O. The computer now blocks winning lines and takes center or corners when it can. A full board is a draw. The scoreboard tracks wins, draws, and losses. Use **Restart** or **Play again** to clear the board without resetting the score.
+Tap an empty cell to place X. The computer answers immediately. Three marks in a line wins. A full board with no line is a draw. After the alert, start a new round without wiping the match score.
 
-## Game Screens 📱 📸
+## Architecture
 
-<img src="https://github.com/halilozel1903/TicTacToeGame/blob/master/TicTacToe/screen-1.png" width="250" /> <img src="https://github.com/halilozel1903/TicTacToeGame/blob/master/TicTacToe/screen-2.png" width="250" />  <img src="https://github.com/halilozel1903/TicTacToeGame/blob/master/TicTacToe/screen-3.png" width="250" />
+```text
+ViewController  →  TicTacToeEngine
+     board UI         outcomes + computer move
+```
 
-## Donation 💸
+| File | Role |
+| --- | --- |
+| `ViewController.swift` | Board buttons, alerts, scoreboard, restart |
+| `TicTacToeEngine.swift` | Winning lines, draws, empty cells, blocking AI |
 
-If this project help 💁 you, Can you give me a cup of coffee? ☕
+Open `TicTacToe.xcodeproj` in Xcode and run the **TicTacToe** scheme.
 
-[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/halilozel1903)
+## Screenshots
 
-## License ℹ️
+<p>
+  <img src="TicTacToe/screen-1.png" width="220" alt="Empty board ready for the first move" />
+  <img src="TicTacToe/screen-2.png" width="220" alt="Mid-game board with X and O marks" />
+  <img src="TicTacToe/screen-3.png" width="220" alt="Completed match on the 3x3 grid" />
+</p>
+
+## License
+
+MIT © Halil OZEL. See the license text below.
+
+<details>
+<summary>MIT License</summary>
+
 ```
 MIT License
 
@@ -42,3 +91,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
+
+</details>
