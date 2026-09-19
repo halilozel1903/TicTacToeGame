@@ -4,6 +4,9 @@
 
 Tic-tac-toe, noughts and crosses, or Xs and Os is a paper-and-pencil game for two players who take turns marking the spaces in a three-by-three grid with X or O. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row is the winner.
 
+## How to play
+
+You play as X against a computer opponent as O. The computer now blocks winning lines and takes center or corners when it can. A full board is a draw. The scoreboard tracks wins, draws, and losses. Use **Restart** or **Play again** to clear the board without resetting the score.
 
 ## Game Screens 📱 📸
 
