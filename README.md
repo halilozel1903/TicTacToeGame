@@ -1,3 +1,5 @@
+
+
 # Tic Tac Toe
 
 <p align="center">
@@ -51,7 +53,7 @@ iOS UIKit tic-tac-toe match: you play X against a blocking computer opponent on 
 
 ## How to play
 
-Tap an empty cell to place X. The computer answers immediately. Three marks in a line wins. A full board with no line is a draw. After the alert, start a new round without wiping the match score.
+Tap an empty cell to place X. The computer answers immediately. Three marks in a line wins. A full board with no line is a draw. After the alert, tap **Play again** to start a new round without wiping the match score.
 
 ## Architecture
 
