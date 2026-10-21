@@ -74,11 +74,11 @@ class ViewController: UIViewController {
         switch TicTacToeEngine.outcome(playerX: player1, playerO: player2) {
         case .win(.x):
             playerWins += 1
-            endGame(title: "Winner", message: "Player 1 is winner")
+            endGame(title: "Winner", message: "You win.")
             return true
         case .win(.o):
             computerWins += 1
-            endGame(title: "Winner", message: "Player 2 is winner")
+            endGame(title: "Winner", message: "The computer wins.")
             return true
         case .draw:
             draws += 1
